@@ -41,8 +41,8 @@ Route::post('/contact', function() {
 	return "submitted";
 });
 
-Route::get('/user/detail/{slug}', function($slug) {
-	return $slug;
+Route::get('/user/detail/{slug}/{id}', function($slug, $id) {
+	return $slug . $id;
 })->where('slug', '[A-Za-z-_]+');
 
 Route::get('/user/profile/{id}', function($id) {
