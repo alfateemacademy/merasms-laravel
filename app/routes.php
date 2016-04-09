@@ -13,42 +13,19 @@
 
 Route::group(array('prefix' => 'admin'), function() {
 
+	Route::get('/category', 'AdminCategoryController@index');
+	Route::get('/category/create', 'AdminCategoryController@create');
+	Route::post('/category', 'AdminCategoryController@store');
+	Route::get('/category/{id}/edit', 'AdminCategoryController@edit');
+	Route::put('/category/{id}/update', 'AdminCategoryController@update');
+	Route::delete('/category/{id}/delete', 'AdminCategoryController@destroy');
 
-	Route::get('/a', function() {
-		return "Admin a Page";
-	});
-	Route::get('/b', function() {
-		return "Admin b Page";
-	});
-	Route::get('/c', function() {
-		return "Admin c Page";
-	});
-	Route::get('/d', function() {
-		return "Admin d Page";
-	});
-
+	Route::get('/', 'AdminHomeController@index');
 });
 
-Route::get('/', function() {
-	return "Main Page";
-});
 
-Route::get('/contact', function() {
-	return View::make('contact');
-});
 
-Route::post('/contact', function() {
-	return "submitted";
-});
 
-Route::get('/user/detail/{slug}/{id}', function($slug, $id) {
-	return $slug . $id;
-})->where('slug', '[A-Za-z-_]+');
 
-Route::get('/user/profile/{id}', function($id) {
-	if($id == 0)
-		App::abort(404);
 
-	return "page: " . $id;
-})->where('id', '[0-9]+');
 
