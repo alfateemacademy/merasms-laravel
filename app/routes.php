@@ -21,9 +21,8 @@ Route::group(array('prefix' => 'admin'), function() {
 	Route::delete('/category/{id}/delete', 'AdminCategoryController@destroy');
 
 	Route::get('/', 'AdminHomeController@index');
+
 });
-
-
 
 
 
