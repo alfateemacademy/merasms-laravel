@@ -9,7 +9,9 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('admin.category.index');
+		$data['categories'] = Category::get();
+
+		return View::make('admin.category.index', $data);
 	}
 
 
@@ -32,8 +34,13 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function store()
 	{
-		return "category store page";
+		$category = Category::create([
+			'title' => Input::get('title'),
+			'slug' => Str::slug( Input::get('title') ),
+			'category_status' => Input::get('category_status')
+		]);
 
+		return Redirect::to('/admin/category');
 	}
 
 
@@ -84,7 +91,7 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		return "category destroy page for " . $id;
+		return Input::all();
 
 	}
 

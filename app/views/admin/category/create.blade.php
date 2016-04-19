@@ -20,19 +20,31 @@
 
     <div class="row">
 
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Add New Category</h3>
                 </div>
                 <div class="panel-body">
-                    <form action="">
-                        <div class="form-group"><label for="">First name</label>
-                            <input type="text" name="" id="" class="form-control">
+
+                    <form method="post" action="/admin/category">
+                        <div class="form-group">
+                            <label for="">Title</label>
+                            <input type="text" name="title" id="title" class="form-control">
                         </div>
 
-                        <div class="form-group"><label for="">Last Name</label><input type="text" name="" id=""
-                                                                                       class="form-control"></div>
+                        <div class="form-group">
+                            <label for="">Status</label>
+                            <select name="category_status" id="category_status" class="form-control">
+                                <option value="none">- Select Category -</option>
+                                <option value="ACTIVE">Active</option>
+                                <option value="DEACTIVE">Deactive</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add Category</button>
+                        </div>
                     </form>
                 </div>
             </div>

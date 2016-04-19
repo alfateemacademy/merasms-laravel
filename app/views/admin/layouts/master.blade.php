@@ -169,7 +169,6 @@
             </div>
             <!-- /.row -->
             @yield('content')
-
         </div>
         <!-- /.container-fluid -->
 
