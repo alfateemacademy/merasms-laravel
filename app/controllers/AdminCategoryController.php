@@ -34,6 +34,14 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function store()
 	{
+		$validator = Validator::make(Input::all(), [
+			'title' => 'required',
+			'category_status' => 'required'
+		]);
+
+		if($validator->fails())
+			return Redirect::back()->withErrors($validator)->withInput();
+
 		$category = Category::create([
 			'title' => Input::get('title'),
 			'slug' => Str::slug( Input::get('title') ),
@@ -53,7 +61,6 @@ class AdminCategoryController extends \BaseController {
 	public function show($id)
 	{
 		return "category  page";
-
 	}
 
 
@@ -65,7 +72,9 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		return "category edit page for " . $id;
+		$data['category'] = Category::find($id);
+
+		return View::make('admin.category.edit', $data);
 
 	}
 

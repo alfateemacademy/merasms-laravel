@@ -42,9 +42,9 @@
                                     <td>{{ $category->slug }}</td>
                                     <td>{{ $category->category_status }}</td>
                                     <td>
-                                        <form method="post" action="/admin/category/{{ $category->id }}/delete">
+                                        <form method="post" action="{{ route('admin..category.destroy', $category->id) }}">
                                             <input type="hidden" name="_method" value="delete">
-                                            <a href="/admin/category/{{ $category->id }}/edit"
+                                            <a href="{{ route('admin..category.edit', $category->id)  }}"
                                                class="btn btn-primary btn-xs"> <i class="fa fa-edit"></i></a>
                                             <button type="submit"
                                                     class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>

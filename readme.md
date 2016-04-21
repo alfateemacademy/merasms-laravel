@@ -10,3 +10,14 @@
 ### How to replace PHPStorm terminal with GitBash console
 File > Settings > Terminal > Shell Path
 C:\Program Files\Git\bin\bash.exe -login -i
+
+
+## Eloquent Usage
+All records: Model::get();
+Individual Record: Model::find(1);
+Create record: Model::create(['column' => 'value']);
+
+## Input Validation
+Validation Apply: $v = Validator::make(Input::all(), ['field' => 'rule']);
+Check Validation Status: $v->fais();
+Validation Message: ->withErrors($v);

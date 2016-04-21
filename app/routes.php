@@ -13,12 +13,7 @@
 
 Route::group(array('prefix' => 'admin'), function() {
 
-	Route::get('/category', 'AdminCategoryController@index');
-	Route::get('/category/create', 'AdminCategoryController@create');
-	Route::post('/category', 'AdminCategoryController@store');
-	Route::get('/category/{id}/edit', 'AdminCategoryController@edit');
-	Route::put('/category/{id}/update', 'AdminCategoryController@update');
-	Route::delete('/category/{id}/delete', 'AdminCategoryController@destroy');
+	Route::resource('/category', 'AdminCategoryController');
 
 	Route::get('/', 'AdminHomeController@index');
 
