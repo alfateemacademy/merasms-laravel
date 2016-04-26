@@ -3,6 +3,15 @@
 class AdminCategoryController extends \BaseController {
 
 	/**
+	 * AdminCategoryController constructor.
+	 */
+	public function __construct()
+	{
+		$this->beforeFilter('csrf', ['only' => ['store', 'update', 'destroy']]);
+	}
+
+
+	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
@@ -73,7 +82,6 @@ class AdminCategoryController extends \BaseController {
 	public function edit($id)
 	{
 		$data['category'] = Category::find($id);
-
 		return View::make('admin.category.edit', $data);
 
 	}
@@ -87,8 +95,27 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		return "category update page for " . $id;
+		$validator = Validator::make(Input::all(), [
+			'title' => 'required',
+			'category_status' => 'required'
+		]);
 
+		if($validator->fails())
+			return Redirect::back()->withErrors($validator)->withInput();
+
+		$category = Category::find($id);
+
+		if($category)
+		{
+			$category->update([
+				'title' => Input::get('title'),
+				'slug' => Str::slug( Input::get('title') ),
+				'category_status' => Input::get('category_status')
+			]);
+			return Redirect::route('admin..category.index');
+		}
+
+		return Redirect::back();
 	}
 
 
@@ -100,7 +127,11 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		return Input::all();
+		$category = Category::find($id);
+
+		$category->delete();
+
+		return Redirect::route('admin..category.index');
 
 	}
 

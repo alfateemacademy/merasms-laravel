@@ -28,6 +28,7 @@
                 <div class="panel-body">
 
                     <form method="post" action="{{ route('admin..category.update', $category->id) }}">
+                        <input type="hidden" name="_token" value="{{ Session::token() }}">
                         <input type="hidden" name="_method" value="PUT">
                             <div class="form-group {{ ($errors->has('title')) ? 'has-error' : null  }}">
                             <label for="" class="control-label">Title</label>
@@ -40,7 +41,7 @@
                             <select name="category_status" id="category_status" class="form-control">
                                 <option value="">- Select Category -</option>
                                 <option value="ACTIVE" {{ ($category->category_status == 'ACTIVE') ? 'selected=selected' : null }}>Active</option>
-                                <option value="DEACTIVE" {{ ($category->category_status == 'DEACTIVE') ? 'selected=selecteds' : null }}>Deactive</option>
+                                <option value="DEACTIVE" {{ ($category->category_status == 'DEACTIVE') ? 'selected=selected' : null }}>Deactive</option>
                             </select>
                             <span class="help-block">{{ $errors->first('category_status') }}</span>
                         </div>

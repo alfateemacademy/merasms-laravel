@@ -24,6 +24,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
+                        @if(count($categories))
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
                             <tr>
@@ -54,9 +55,12 @@
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div class="text-right">
-                        <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                        @else
+                            <div class="alert alert-info">
+                                No record(s) found. <br>
+                                <a href="{{ route('admin..category.create') }}">click here to add new category</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

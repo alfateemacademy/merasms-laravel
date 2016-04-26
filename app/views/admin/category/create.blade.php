@@ -26,28 +26,23 @@
                     <h3 class="panel-title">Add New Category</h3>
                 </div>
                 <div class="panel-body">
-
-                    <form method="post" action="/admin/category">
+                    {{ Form::open(['route' => 'admin..category.store', 'method' => 'POST'])  }}
                             <div class="form-group {{ ($errors->has('title')) ? 'has-error' : null  }}">
                             <label for="" class="control-label">Title</label>
-                            <input type="text" name="title" id="title" class="form-control" value="{{ Input::old('title') }}">
+                            {{ Form::text('title', null, ['class' => 'form-control']) }}
                             <span class="help-block">{{ $errors->first('title') }}</span>
                         </div>
 
                         <div class="form-group {{ ($errors->has('category_status')) ? 'has-error' : null  }}">
                             <label for="" class="control-label">Status</label>
-                            <select name="category_status" id="category_status" class="form-control">
-                                <option value="">- Select Category -</option>
-                                <option value="ACTIVE" {{ (Input::old('category_status') == 'ACTIVE') ? 'selected=selected' : null }}>Active</option>
-                                <option value="DEACTIVE" {{ (Input::old('category_status') == 'DEACTIVE') ? 'selected=selecteds' : null }}>Deactive</option>
-                            </select>
+                            {{ Form::select('category_status', ['' => '- Select Category -', 'ACTIVE' => 'Active', 'DEACTIVE' => 'Deactive'], null, ['class' => 'form-control']) }}
                             <span class="help-block">{{ $errors->first('category_status') }}</span>
                         </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Add Category</button>
                         </div>
-                    </form>
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>
