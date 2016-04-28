@@ -14,6 +14,7 @@
 Route::group(array('prefix' => 'admin'), function() {
 
 	Route::resource('/category', 'AdminCategoryController');
+	Route::resource('/sms', 'AdminSMSController');
 
 	Route::get('/', 'AdminHomeController@index');
 

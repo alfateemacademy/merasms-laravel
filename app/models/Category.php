@@ -10,4 +10,9 @@ class Category extends Eloquent
 
     protected $table = 'category';
 
+    public function sms()
+    {
+        return $this->hasMany('Sms', 'category_id');
+    }
+
 }
