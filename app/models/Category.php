@@ -7,7 +7,6 @@ class Category extends Eloquent
         'slug',
         'category_status'
     ];
-
     protected $table = 'category';
 
     public function sms()

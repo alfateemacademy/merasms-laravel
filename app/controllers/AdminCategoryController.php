@@ -18,9 +18,9 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function index()
 	{
-		//$data['categories'] = Category::get();
+		$data['categories'] = Category::with('sms')->get();
 
-		return Category::with('sms')->get();
+		// return Category::with('sms')->get();
 
 		return View::make('admin.category.index', $data);
 	}

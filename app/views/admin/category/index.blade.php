@@ -31,6 +31,7 @@
                                 <th>ID</th>
                                 <th>Category Title</th>
                                 <th>Category Slug</th>
+                                <th>SMS #</th>
                                 <th>Added at</th>
                                 <th>Action</th>
                             </tr>
@@ -41,6 +42,7 @@
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->title }}</td>
                                     <td>{{ $category->slug }}</td>
+                                    <td> {{ count($category->sms) }} </td>
                                     <td>{{ $category->category_status }}</td>
                                     <td>
                                         <form method="post" action="{{ route('admin..category.destroy', $category->id) }}">

@@ -10,6 +10,7 @@ class AdminSMSController extends \BaseController {
 	public function index()
 	{
 		$sms =  Sms::with('category')->get();
+
 		return View::make('admin.sms.index')->with('sms', $sms);
 	}
 
