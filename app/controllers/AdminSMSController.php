@@ -22,7 +22,8 @@ class AdminSMSController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		$data['categories'] = Category::lists('title', 'id');
+		return View::make('admin.sms.create', $data);
 	}
 
 
@@ -33,7 +34,29 @@ class AdminSMSController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validator = Validator::make(Input::all(), [
+			'title' => 'required',
+			'category_id' => 'required',
+			'sms_content' => 'required'
+		]);
+
+		if($validator->fails())
+			return Redirect::back()->withInput()->withErrors($validator);
+
+		/*SMS::create([
+			'title' => Input::get('title'),
+			'slug' => Str::slug(Input::get('title')),
+			'category_id' => Input::get('category_id'),
+			'sms_content' => Input::get('sms_content'),
+			'sms_status' => 'ACTIVE'
+		]);*/
+
+		$input = Input::all();
+		$input['slug'] = Str::slug(Input::get('title'));
+		$input['sms_status'] = 'ACTIVE';
+		Sms::create($input);
+
+		return Redirect::route('admin..sms.index');
 	}
 
 
@@ -45,7 +68,7 @@ class AdminSMSController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+
 	}
 
 
@@ -57,7 +80,12 @@ class AdminSMSController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$sms = Sms::find($id);
+		//return $sms;
+		$categories = Category::lists('title', 'id');
+
+		return View::make('admin.sms.edit')->with('sms', $sms)
+			->with('categories', $categories);
 	}
 
 
@@ -69,7 +97,22 @@ class AdminSMSController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$validator = Validator::make(Input::all(), [
+			'title' => 'required',
+			'category_id' => 'required',
+			'sms_content' => 'required'
+		]);
+
+		if($validator->fails())
+			return Redirect::back()->withInput()->withErrors($validator);
+
+		$sms = Sms::find($id);
+
+		$input = Input::all();
+		$input['slug'] = Str::slug(Input::get('slug'));
+		$sms->update($input);
+
+		return Redirect::route('admin..sms.index');
 	}
 
 
@@ -81,7 +124,10 @@ class AdminSMSController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$sms = Sms::find($id);
+		$sms->delete();
+
+		return Redirect::route('admin..sms.index');
 	}
 
 
