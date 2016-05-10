@@ -51,6 +51,14 @@ class AdminSMSController extends \BaseController {
 			'sms_status' => 'ACTIVE'
 		]);*/
 
+		/*$sms = new Sms();
+		$sms->category_id = 1;
+		$sms->title = Input::get('title');
+		$sms->slug = Str::slug(Input::get('title'));
+		$sms->sms_content = "asfds";
+		$sms->sms_status = "ACTIVE";
+		$sms->save();*/
+
 		$input = Input::all();
 		$input['slug'] = Str::slug(Input::get('title'));
 		$input['sms_status'] = 'ACTIVE';
