@@ -1,6 +1,14 @@
 <?php
 
 class AdminUserController extends \BaseController {
+	/**
+	 * AdminUserController constructor.
+	 */
+	public function __construct()
+	{
+		$this->beforeFilter('auth');
+	}
+
 
 	/**
 	 * Display a listing of the resource.

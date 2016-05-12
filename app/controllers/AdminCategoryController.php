@@ -7,6 +7,7 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function __construct()
 	{
+		$this->beforeFilter('auth');
 		$this->beforeFilter('csrf', ['only' => ['store', 'update', 'destroy']]);
 	}
 

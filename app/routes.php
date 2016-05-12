@@ -17,6 +17,12 @@ Route::group(array('prefix' => 'admin'), function() {
 	Route::resource('/sms', 'AdminSMSController');
 	Route::resource('/user', 'AdminUserController');
 
+	Route::controller('/auth', 'AdminAuthController', [
+		'getLogin' => 'admin.auth.login',
+		'postLogin' => 'admin.auth.login.post',
+		'getLogout' => 'admin.auth.logout'
+	]);
+
 	Route::get('/', 'AdminHomeController@index');
 
 });
