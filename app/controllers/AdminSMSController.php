@@ -1,6 +1,7 @@
 <?php
 
 class AdminSMSController extends \BaseController {
+
 	/**
 	 * AdminSMSController constructor.
 	 */
@@ -45,11 +46,25 @@ class AdminSMSController extends \BaseController {
 		$validator = Validator::make(Input::all(), [
 			'title' => 'required',
 			'category_id' => 'required',
-			'sms_content' => 'required'
+			'type' => 'required',
+			'sms_content' => 'required_if:type,text',
+			'image_url' => 'required_if:type,image|image'
 		]);
 
 		if($validator->fails())
 			return Redirect::back()->withInput()->withErrors($validator);
+
+		$fileName = null;
+		if(Input::hasFile('image_url'))
+		{
+			$file = Input::file('image_url');
+			$fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+
+			//if($file->getMimeType() == 'image/jpg' || $file->getMimeType() == 'image/gif')
+			//{
+				$file->move('./uploads/sms/', $fileName);
+			//}
+		}
 
 		/*SMS::create([
 			'title' => Input::get('title'),
@@ -67,9 +82,16 @@ class AdminSMSController extends \BaseController {
 		$sms->sms_status = "ACTIVE";
 		$sms->save();*/
 
-		$input = Input::all();
+		$input = Input::except('sms_content', 'image_url');
+
 		$input['slug'] = Str::slug(Input::get('title'));
 		$input['sms_status'] = 'ACTIVE';
+
+		if(Input::get('type') == 'text')
+			$input['sms_content'] = Input::get('sms_content');
+		else
+			$input['image_url'] = $fileName;
+
 		Sms::create($input);
 
 		return Redirect::route('admin..sms.index');

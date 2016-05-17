@@ -8,7 +8,9 @@ class Sms extends Eloquent
         'category_id',
         'title',
         'slug',
+        'type',
         'sms_content',
+        'image_url',
         'views',
         'sms_status'
     ];

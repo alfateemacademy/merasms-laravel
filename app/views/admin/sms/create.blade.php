@@ -26,7 +26,7 @@
                     <h3 class="panel-title">Add New SMS</h3>
                 </div>
                 <div class="panel-body">
-                    {{ Form::open(['route' => 'admin..sms.store', 'method' => 'POST'])  }}
+                    {{ Form::open(['route' => 'admin..sms.store', 'method' => 'POST', 'files' => true])  }}
 
                     <div class="form-group {{ ($errors->has('category_id')) ? 'has-error' : null  }}">
                         <label for="" class="control-label">Select Category</label>
@@ -40,25 +40,69 @@
                         <span class="help-block">{{ $errors->first('category_id') }}</span>
                     </div>
 
-                        <div class="form-group {{ ($errors->has('title')) ? 'has-error' : null  }}">
-                            <label for="" class="control-label">Title</label>
-                            {{ Form::text('title', null, ['class' => 'form-control']) }}
-                            <span class="help-block">{{ $errors->first('title') }}</span>
-                        </div>
+                    <div class="form-group {{ ($errors->has('title')) ? 'has-error' : null  }}">
+                        <label for="" class="control-label">Title</label>
+                        {{ Form::text('title', null, ['class' => 'form-control']) }}
+                        <span class="help-block">{{ $errors->first('title') }}</span>
+                    </div>
 
-                    <div class="form-group {{ ($errors->has('sms_content')) ? 'has-error' : null  }}">
+                    <div class="form-group {{ ($errors->has('type')) ? 'has-error' : null  }}">
+                        <label for="" class="control-label">Type</label>
+                        {{ Form::select('type', ['' => '- Select SMS Type -', 'text' => 'Text', 'image' => 'Image'],
+                            null, ['id' => 'sms_type', 'class' => 'form-control']) }}
+                        <span class="help-block">{{ $errors->first('type') }}</span>
+                    </div>
+
+                    <div id="sms_content" class="form-group {{ ($errors->has('sms_content')) ? 'has-error' : null  }}" style="display: none;">
                         <label for="" class="control-label">Message</label>
                         {{ Form::textarea('sms_content', null, ['class' => 'form-control']) }}
                         <span class="help-block">{{ $errors->first('sms_content') }}</span>
                     </div>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Add SMS</button>
-                        </div>
+                    <div id="sms_image" class="form-group {{ ($errors->has('image_url')) ? 'has-error' : null  }}" style="display: none;">
+                        <label for="" class="control-label">Select Image</label>
+                        {{ Form::file('image_url', ['class' => 'form-control']) }}
+                        <span class="help-block">{{ $errors->first('image_url') }}</span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Add SMS</button>
+                    </div>
                     {{ Form::close() }}
                 </div>
             </div>
         </div>
     </div>
 
+@endsection
+
+@section('footer.scripts')
+<script>
+    function checkSmsType() {
+        var selectedValue = $("#sms_type option:selected").val();
+
+        if(selectedValue != "")
+        {
+            if(selectedValue == 'text')
+            {
+                $("#sms_content").slideDown();
+                $("#sms_image").hide();
+            }
+            else
+            {
+                $("#sms_content").hide();
+                $("#sms_image").slideDown();
+            }
+        }
+        else
+        {
+            $("#sms_content").hide();
+            $("#sms_image").hide();
+        }
+    }
+    $(document).ready(function() {
+        checkSmsType();
+        $("#sms_type").on('change', checkSmsType);
+    });
+</script>
 @endsection

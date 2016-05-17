@@ -17,7 +17,7 @@ class CreateSmsTable extends Migration {
 			$table->increments('id');
 			$table->string('title');
 			$table->string('slug');
-			$table->longText('sms_content');
+			$table->longText('sms_content')->nullable();
 			$table->string('sms_status', 10);
 			$table->timestamps();
 		});
