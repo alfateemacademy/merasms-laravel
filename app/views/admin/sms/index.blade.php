@@ -44,15 +44,25 @@
                                         <td>{{ $message->category->title }}</td>
                                         <td>{{ $message->title }}</td>
                                         <td>{{ $message->views }}</td>
-                                        <td>{{ $message->sms_status }}</td>
+                                        <td>
+                                            @if($message->sms_status == 'ACTIVE')
+                                                <a href="{{ route('admin..sms.status', $message->id) }}"
+                                                   class="btn btn-success btn-xs btn-status-update">{{ $message->sms_status }}</a>
+                                            @else
+                                                <a href="{{ route('admin..sms.status', $message->id) }}"
+                                                   class="btn btn-danger btn-xs btn-status-update">{{ $message->sms_status }}</a>
+                                            @endif
+                                        </td>
                                         <td>{{ $message->created_at }}</td>
                                         <td>
-                                            <form method="post" action="{{ route('admin..sms.destroy', $message->id) }}">
+                                            <form method="post"
+                                                  action="{{ route('admin..sms.destroy', $message->id) }}">
                                                 <input type="hidden" name="_method" value="delete">
                                                 <a href="{{ route('admin..sms.edit', $message->id)  }}"
                                                    class="btn btn-primary btn-xs"> <i class="fa fa-edit"></i></a>
                                                 <button type="submit"
-                                                        class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
+                                                        class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
@@ -71,4 +81,28 @@
         </div>
     </div>
     <!-- /.row -->
+@endsection
+
+@section('footer.scripts')
+    <script>
+        $(document).ready(function () {
+            $(".btn-status-update").on('click', function (e) {
+                e.preventDefault();
+
+                var href = $(this).attr('href');
+                var self = $(this);
+                $.get(href, function (response) {
+                    self.html(response.newstatus);
+
+                    if (response.newstatus == 'ACTIVE') {
+                        self.removeClass('btn-danger').addClass('btn-success')
+                    }
+                    else {
+                        self.removeClass('btn-success').addClass('btn-danger')
+                    }
+
+                });
+            });
+        });
+    </script>
 @endsection

@@ -14,6 +14,8 @@
 Route::group(array('prefix' => 'admin'), function() {
 
 	Route::resource('/category', 'AdminCategoryController');
+
+	Route::get('/sms/{sms}/status', ['as' => 'admin..sms.status', 'uses' => 'AdminSMSController@status']);
 	Route::resource('/sms', 'AdminSMSController');
 	Route::resource('/user', 'AdminUserController');
 

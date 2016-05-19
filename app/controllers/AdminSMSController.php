@@ -119,6 +119,7 @@ class AdminSMSController extends \BaseController {
 	public function edit($id)
 	{
 		$sms = Sms::find($id);
+
 		//return $sms;
 		$categories = Category::lists('title', 'id');
 
@@ -166,6 +167,29 @@ class AdminSMSController extends \BaseController {
 		$sms->delete();
 
 		return Redirect::route('admin..sms.index');
+	}
+
+	public function status($id)
+	{
+		$sms = Sms::find($id);
+
+		$oldStatus = $sms->sms_status;
+
+		if($oldStatus == 'ACTIVE')
+			$newStatus = 'DEACTIVE';
+		else
+			$newStatus = 'ACTIVE';
+
+		$sms->update([
+			'sms_status' => $newStatus
+		]);
+
+		if(Request::ajax())
+		{
+			return Response::json(['status' => 'success', 'newstatus' => $newStatus]);
+		}
+
+		return Redirect::back();
 	}
 
 
