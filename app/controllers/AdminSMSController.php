@@ -18,7 +18,29 @@ class AdminSMSController extends \BaseController {
 	 */
 	public function index()
 	{
-		$sms =  Sms::with('category')->get();
+		$perPage = (Input::has('per_page')) ? Input::get('per_page') : null;
+
+		if($perPage == null)
+		{
+			$sms = Sms::with('category');
+			if(Input::has('q'))
+			{
+				$sms = $sms->where('title', 'LIKE', '%'. Input::get('q') .'%');
+			}
+
+			$sms = $sms->get();
+
+		}
+		else
+		{
+			$sms =  Sms::with('category');
+			if(Input::has('q'))
+			{
+				$sms = $sms->where('title', 'LIKE', '%'. Input::get('q') .'%');
+			}
+
+			$sms = $sms->paginate($perPage);
+		}
 
 		return View::make('admin.sms.index')->with('sms', $sms);
 	}
@@ -58,6 +80,7 @@ class AdminSMSController extends \BaseController {
 		if(Input::hasFile('image_url'))
 		{
 			$file = Input::file('image_url');
+
 			$fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
 
 			//if($file->getMimeType() == 'image/jpg' || $file->getMimeType() == 'image/gif')

@@ -25,6 +25,25 @@
                 <div class="panel-body">
                     <div class="table-responsive">
                         @if(count($sms))
+                            {{ Form::open(['route' => 'admin..sms.index', 'method' => 'get', 'id' => 'formSmsIndex']) }}
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    {{ Form::select('per_page', ['' => 'All', 10 => '10', 20 => '20', 50 => '50'], Input::get('per_page'), ['class' => 'form-control select-per-page']) }}
+
+                                </div>
+                                <div class="col-md-5 col-md-offset-3">
+                                    <div class="input-group">
+                                        {{ Form::text('q', Input::get('q'), ['class' => 'form-control', 'placeholder' => 'Search for...']) }}
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit"> <i class="glyphicon glyphicon-search"></i> Go!</button>
+      </span>
+                                    </div>
+                                    <!-- /input-group -->
+                                </div>
+                            </div>
+                            {{ Form::close() }}
+                            <hr>
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>
                                 <tr>
@@ -69,6 +88,12 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            @if(Input::has('per_page'))
+                                <div>
+                                    {{ $sms->getTotal() }} {{ $sms->getPerPage() }} {{ $sms->getLastPage() }} {{ $sms->getFrom() }}
+                                    {{ $sms->appends(['per_page' => Input::get('per_page'), 'q' => Input::get('q')])->links() }}
+                                </div>
+                            @endif
                         @else
                             <div class="alert alert-info">
                                 No record(s) found. <br>
@@ -92,6 +117,7 @@
                 var href = $(this).attr('href');
                 var self = $(this);
                 $.get(href, function (response) {
+                    console.log(response);
                     self.html(response.newstatus);
 
                     if (response.newstatus == 'ACTIVE') {
@@ -102,6 +128,10 @@
                     }
 
                 });
+            });
+
+            $(".select-per-page").on('change', function (e) {
+                $("#formSmsIndex").submit();
             });
         });
     </script>
