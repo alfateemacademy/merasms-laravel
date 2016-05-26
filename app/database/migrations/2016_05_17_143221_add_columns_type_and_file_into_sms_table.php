@@ -16,6 +16,9 @@ class AddColumnsTypeAndFileIntoSmsTable extends Migration {
 		{
 			$table->string('type')->default('text')->after('slug');
 			$table->string('image_url')->nullable()->after('sms_content');
+			$table->integer('user_id')->unsigned()->after('category_id');
+
+			$table->foreign('user_id')->references('id')->on('user');
 		});
 	}
 
@@ -28,7 +31,8 @@ class AddColumnsTypeAndFileIntoSmsTable extends Migration {
 	{
 		Schema::table('sms', function(Blueprint $table)
 		{
-			$table->dropColumn(['type', 'image_url']);
+			$table->dropForeign('sms_user_id_foreign');
+			$table->dropColumn(['type', 'image_url', 'user_id']);
 		});
 	}
 

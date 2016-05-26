@@ -4,6 +4,7 @@ class Sms extends Eloquent
 {
     protected $fillable = [
         'category_id',
+        'user_id',
         'title',
         'slug',
         'type',

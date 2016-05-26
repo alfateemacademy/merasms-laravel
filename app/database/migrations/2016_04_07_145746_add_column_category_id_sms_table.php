@@ -16,6 +16,8 @@ class AddColumnCategoryIdSmsTable extends Migration {
 		{
 			$table->integer('category_id')->after('id')->unsigned();
 			$table->integer('views')->default(0)->after('sms_content')->nullable();
+
+			$table->foreign('category_id')->references('id')->on('category');
 		});
 	}
 
@@ -28,6 +30,7 @@ class AddColumnCategoryIdSmsTable extends Migration {
 	{
 		Schema::table('sms', function(Blueprint $table)
 		{
+			$table->dropForeign('sms_category_id_foreign');
 			$table->dropColumn(['views', 'category_id']);
 		});
 	}

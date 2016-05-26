@@ -19,7 +19,7 @@ class AdminCategoryController extends \BaseController {
 	 */
 	public function index()
 	{
-		$data['categories'] = Category::with('sms')->get();
+		$data['categories'] = Category::with('sms')->paginate(2);
 
 		// return Category::with('sms')->get();
 
@@ -131,11 +131,20 @@ class AdminCategoryController extends \BaseController {
 	public function destroy($id)
 	{
 		$category = Category::find($id);
+		try
+		{
+			$category->delete();
 
-		$category->delete();
+			return Redirect::route('admin..category.index');
+		}
+		catch(\Illuminate\Database\QueryException $e)
+		{
+			if($e->getCode() == 23000)
+				return Redirect::back()->with('error', 'Category cannot be deleted.');
 
-		return Redirect::route('admin..category.index');
-
+			if($e->getCode() == 12345)
+				return Redirect::back()->with('error', 'Another message');
+		}
 	}
 
 

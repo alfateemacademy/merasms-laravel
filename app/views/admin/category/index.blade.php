@@ -23,6 +23,11 @@
                     <h3 class="panel-title"><i class="fa fa-bars"></i> Categories</h3>
                 </div>
                 <div class="panel-body">
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger">
+                            {{ Session::get('error') }}
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         @if(count($categories))
                         <table class="table table-bordered table-hover table-striped">
@@ -46,6 +51,7 @@
                                     <td>{{ $category->category_status }}</td>
                                     <td>
                                         <form method="post" action="{{ route('admin..category.destroy', $category->id) }}">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="_method" value="delete">
                                             <a href="{{ route('admin..category.edit', $category->id)  }}"
                                                class="btn btn-primary btn-xs"> <i class="fa fa-edit"></i></a>
@@ -57,6 +63,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                            {{ $categories->links() }}
                         @else
                             <div class="alert alert-info">
                                 No record(s) found. <br>
