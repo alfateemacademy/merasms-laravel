@@ -18,4 +18,9 @@ class Sms extends Eloquent
     {
         return $this->belongsTo('Category', 'category_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('User', 'user_id');
+    }
 }

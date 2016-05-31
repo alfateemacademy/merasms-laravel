@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::group(array('prefix' => 'admin'), function() {
 
 	Route::resource('/category', 'AdminCategoryController');
@@ -42,7 +44,20 @@ Route::group(array('prefix' => 'admin'), function() {
 
 });
 
+Route::get('/sms/{slug}', [
+	'as' => 'sms.detail',
+	'uses' => 'SmsController@detail'
+]);
+Route::get('/category/{slug}', [
+	'as' => 'sms.category',
+	'uses' => 'SmsController@detail'
+]);
+Route::get('/', 'HomeController@index');
 
 
 
 
+App::missing(function($exception)
+{
+	return View::make('errors.404');
+});
