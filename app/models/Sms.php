@@ -23,4 +23,9 @@ class Sms extends Eloquent
     {
         return $this->belongsTo('User', 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('Comment', 'sms_id');
+    }
 }

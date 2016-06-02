@@ -1,6 +1,6 @@
 <?php
 
-class SmsTableSeeder extends Seeder {
+class CommentTableSeeder extends Seeder {
 
     public function run()
     {

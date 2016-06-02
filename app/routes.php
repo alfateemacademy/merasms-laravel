@@ -52,6 +52,14 @@ Route::get('/category/{slug}', [
 	'as' => 'sms.category',
 	'uses' => 'SmsController@detail'
 ]);
+Route::post('/comment', [
+	'as' => 'comment.store',
+	'uses' => 'CommentController@store'
+]);
+Route::post('/comment/{comment}/like', [
+	'as' => 'comment.like',
+	'uses' => 'CommentController@like'
+]);
 Route::get('/', 'HomeController@index');
 
 
